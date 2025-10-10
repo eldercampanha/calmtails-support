@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Calm Tails — Privacy Policy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Privacy Policy for the Calm Tails app." />
+  <style>
+    :root {
+      --text: #1b1f24;
+      --muted: #5b6773;
+      --link: #0b5fff;
+      --card: #ffffff;
+      --bg: #f6f8fa;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+    }
+    h1, h2 { line-height: 1.25; margin: 0 0 12px; }
+    h1 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+    h2 { font-size: clamp(1.1rem, 2vw, 1.35rem); margin-top: 28px; }
+    p, li { color: var(--text); }
+    .muted { color: var(--muted); }
+    time { white-space: nowrap; }
+    ul { padding-left: 1.2rem; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer {
+      margin-top: 28px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e6edf3;
+        --muted: #9aa7b1;
+        --link: #82aaff;
+        --card: #0d1117;
+        --bg: #010409;
+      }
+      .card { box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 12px 24px rgba(0,0,0,0.35); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <article class="card" role="article" aria-labelledby="title">
+      <header>
+        <h1 id="title">Calm Tails Privacy Policy</h1>
+        <p class="muted"><em>Last updated: <time datetime="2025-02-13">2025-02-13</time></em></p>
+      </header>
+
+      <p>Calm Tails (“the App”) is developed and maintained by Elder Baltazar (“we”, “us”, or “our”). This Privacy Policy explains how the App handles information when you use it on your device.</p>
+
+      <h2 id="info-we-collect">1. Information We Collect</h2>
+      <p>Calm Tails does not require you to create an account and does not collect personally identifiable information (such as your name, email address, or phone number).</p>
+      <p>The App stores entries, logs, and settings locally on your device. These records stay on your device unless you explicitly export, share, or back them up through features you choose to use.</p>
+
+      <h3>Device Permissions</h3>
+      <ul>
+        <li><strong>Notifications:</strong> Used to deliver reminders you configure. Notification schedules are stored locally.</li>
+        <li><strong>Storage / File access:</strong> Used when you generate or export PDF reports. Exported files are saved to locations you select.</li>
+        <li><strong>Orientation &amp; display permissions:</strong> Used to provide a consistent viewing experience.</li>
+      </ul>
+      <p>Calm Tails does <strong>not</strong> access your contacts, camera, microphone, or precise location.</p>
+
+      <h2 id="third-parties">2. Third-Party Services</h2>
+      <p>The App integrates with third-party libraries that help deliver core functionality (for example, React Native components, charting utilities, and PDF generation). These libraries operate within the App and do not receive personal data unless you explicitly share exported files using another app or service.</p>
+      <p>If you open, share, or back up files using third-party apps (email, cloud storage providers, messaging apps, etc.), their privacy policies will apply.</p>
+
+      <h2 id="storage-security">3. Data Storage and Security</h2>
+      <p>All data you enter into Calm Tails is stored locally on your device. We recommend protecting your device with a secure passcode and keeping your operating system up to date.</p>
+      <p>If you uninstall the App, the locally stored data is deleted. We are not able to recover deleted entries.</p>
+
+      <h2 id="children">4. Children’s Privacy</h2>
+      <p>Calm Tails is intended for use by adults. We do not knowingly collect information from children. If you are a parent or guardian and believe a child has provided data through the App, please delete the App from the device to remove stored information.</p>
+
+      <h2 id="choices">5. Your Choices</h2>
+      <ul>
+        <li><strong>Export / Delete:</strong> You can export specific logs or delete entries from within the App at any time.</li>
+        <li><strong>Notifications:</strong> You can enable or disable notifications in your device settings.</li>
+        <li><strong>Permissions:</strong> You can revoke permissions such as storage or notifications through your device settings. Note that revoking certain permissions may limit functionality (for example, exporting PDFs).</li>
+      </ul>
+
+      <h2 id="changes">6. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy to reflect changes to the App or to comply with legal requirements. When we make changes, we will update the “Last updated” date at the top of this page. Continued use of the App after an update means you accept the revised policy.</p>
+
+      <h2 id="contact">7. Contact Us</h2>
+      <address>
+        <strong>Elder Baltazar</strong><br />
+        Email: <a href="mailto:elderbaltazar@gmail.com">elderbaltazar@gmail.com</a>
+      </address>
+
+      <footer>© <span id="year"></span> Elder Baltazar</footer>
+    </article>
+  </main>
+  <script>
+    // Set footer year automatically
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
