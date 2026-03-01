@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Continue in CalmTails</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Supabase auth redirect page for CalmTails. Opens the app to complete sign-in." />
+  <link rel="stylesheet" href="/calmtails-support/assets/legal.css" />
+</head>
+<body>
+  <main class="wrap">
+    <article class="card" role="article" aria-labelledby="title">
+      <header>
+        <h1 id="title">Continue in CalmTails</h1>
+        <p class="muted">We&rsquo;re redirecting you back to the app.</p>
+      </header>
+
+      <section class="actions" aria-label="App Redirect Actions">
+        <a id="open-app-btn" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails app</a>
+        <a id="retry-link" class="text-link" href="calmtails://auth/confirm">If nothing happens, tap here again</a>
+      </section>
+
+      <section class="note-box" aria-label="Install Notes">
+        <p class="muted">If the app is not installed, install it and come back to this email.</p>
+        <div class="store-links">
+          <a href="https://TODO-APP-STORE-URL" rel="noopener noreferrer">App Store (TODO)</a>
+          <a href="https://TODO-GOOGLE-PLAY-URL" rel="noopener noreferrer">Google Play (TODO)</a>
+        </div>
+      </section>
+
+      <section id="debug-box" class="debug-box" aria-label="Debug Information" hidden>
+        <strong>Debug (non-production only)</strong>
+        <div id="debug-url" class="muted"></div>
+      </section>
+
+      <footer class="footer-nav">
+        <span>© <span id="year"></span> Elder Baltazar</span>
+        <a href="/calmtails-support/legal/">Legal</a>
+        <a href="/calmtails-support/legal/terms/">Terms</a>
+        <a href="/calmtails-support/legal/privacy/">Privacy</a>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      var APP_SCHEME_BASE = "calmtails://auth/confirm";
+      var search = window.location.search || "";
+      var hash = window.location.hash || "";
+      var deepLink = APP_SCHEME_BASE + search + hash;
+      var isProductionHost = window.location.hostname === "eldercampanha.github.io";
+      var autoAttempted = false;
+
+      function openApp() {
+        window.location.href = deepLink;
+      }
+
+      var openButton = document.getElementById("open-app-btn");
+      var retryLink = document.getElementById("retry-link");
+
+      openButton.setAttribute("href", deepLink);
+      retryLink.setAttribute("href", deepLink);
+
+      openButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        openApp();
+      });
+
+      retryLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        openApp();
+      });
+
+      window.setTimeout(function () {
+        if (autoAttempted) return;
+        autoAttempted = true;
+        openApp();
+      }, 300);
+
+      if (!isProductionHost) {
+        var debugBox = document.getElementById("debug-box");
+        var debugUrl = document.getElementById("debug-url");
+        debugBox.hidden = false;
+        debugUrl.textContent = window.location.href;
+      }
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

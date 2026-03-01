@@ -2,6 +2,19 @@
 
 _Last updated: 2025-02-13_
 
+## Auth Redirect Fallback Page
+
+This repository includes a static Supabase auth redirect/fallback page at:
+`/calmtails-support/auth/confirm/`
+
+Public URL:
+`https://eldercampanha.github.io/calmtails-support/auth/confirm`
+
+Purpose:
+- Handles email auth redirects from Supabase.
+- Attempts to open the app deep link (`calmtails://auth/confirm`) automatically.
+- Provides manual retry and install fallback links when the app is not installed.
+
 Calm Tails (“the App”) is developed and maintained by Elder Baltazar (“we”, “us”, or “our”). This Privacy Policy explains how the App handles information when you use it on your device.
 
 ## 1. Information We Collect
