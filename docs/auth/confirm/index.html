@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Continue in CalmTails</title>
+  <title>CalmTails Auth Status</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Supabase auth redirect page for CalmTails. Opens the app to complete sign-in." />
+  <meta name="description" content="CalmTails account confirmation and password reset status page for Supabase email auth links." />
   <link rel="stylesheet" href="/calmtails-support/assets/legal.css" />
 </head>
 <body>
   <main class="wrap">
     <article class="card" role="article" aria-labelledby="title">
       <header>
-        <h1 id="title">Continue in CalmTails</h1>
-        <p class="muted">We&rsquo;re redirecting you back to the app.</p>
+        <h1 id="title">Checking your link...</h1>
+        <p id="message" class="muted">Please wait while we verify your sign-in link.</p>
       </header>
 
-      <section class="actions" aria-label="App Redirect Actions">
-        <a id="open-app-btn" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails app</a>
-        <a id="retry-link" class="text-link" href="calmtails://auth/confirm">If nothing happens, tap here again</a>
+      <section class="actions" aria-label="Status Actions">
+        <a id="primary-action" class="btn-primary" href="/calmtails-support/">Open CalmTails app</a>
+        <a id="secondary-action" class="text-link" href="/calmtails-support/" hidden>Go to sign in</a>
       </section>
 
       <section class="note-box" aria-label="Install Notes">
@@ -30,7 +30,7 @@
 
       <section id="debug-box" class="debug-box" aria-label="Debug Information" hidden>
         <strong>Debug (non-production only)</strong>
-        <div id="debug-url" class="muted"></div>
+        <pre id="debug-output" class="muted"></pre>
       </section>
 
       <footer class="footer-nav">
@@ -42,46 +42,119 @@
     </article>
   </main>
 
+  <script src="/calmtails-support/auth/confirm/state-parser.js"></script>
   <script>
     (function () {
       var APP_SCHEME_BASE = "calmtails://auth/confirm";
-      var search = window.location.search || "";
-      var hash = window.location.hash || "";
-      var deepLink = APP_SCHEME_BASE + search + hash;
+      var SIGN_IN_URL = "https://eldercampanha.github.io/calmtails-support/";
+      var AUTO_OPEN_DELAY_MS = 400;
       var isProductionHost = window.location.hostname === "eldercampanha.github.io";
-      var autoAttempted = false;
 
-      function openApp() {
+      var deepLink = APP_SCHEME_BASE + (window.location.search || "") + (window.location.hash || "");
+      var parsed = window.CalmTailsAuthParser.parseAuthCallbackState(window.location);
+
+      var stateConfig = {
+        success_confirmed: {
+          title: "Email confirmed",
+          message: "Your account is ready.",
+          primaryLabel: "Open CalmTails app",
+          primaryType: "open_app",
+          secondaryLabel: "Go to sign in",
+          secondaryType: "sign_in",
+          autoOpen: true
+        },
+        success_recovery: {
+          title: "Continue password reset",
+          message: "Open the app to finish resetting your password.",
+          primaryLabel: "Open CalmTails app",
+          primaryType: "open_app",
+          autoOpen: true
+        },
+        expired: {
+          title: "This link expired",
+          message: "Request a new email and try again.",
+          primaryLabel: "Go to sign in",
+          primaryType: "sign_in",
+          autoOpen: false
+        },
+        invalid: {
+          title: "Invalid link",
+          message: "This link is not valid or was already used.",
+          primaryLabel: "Go to sign in",
+          primaryType: "sign_in",
+          autoOpen: false
+        },
+        unknown_error: {
+          title: "Something went wrong",
+          message: "Please try again from the app.",
+          primaryLabel: "Open CalmTails app",
+          primaryType: "open_app",
+          secondaryLabel: "Go to sign in",
+          secondaryType: "sign_in",
+          autoOpen: false
+        }
+      };
+
+      function resolveHref(type) {
+        return type === "open_app" ? deepLink : SIGN_IN_URL;
+      }
+
+      function tryOpenApp() {
         window.location.href = deepLink;
       }
 
-      var openButton = document.getElementById("open-app-btn");
-      var retryLink = document.getElementById("retry-link");
+      function bindAction(anchor, type) {
+        var href = resolveHref(type);
+        anchor.setAttribute("href", href);
 
-      openButton.setAttribute("href", deepLink);
-      retryLink.setAttribute("href", deepLink);
+        if (type === "open_app") {
+          anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+            tryOpenApp();
+          });
+        }
+      }
 
-      openButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        openApp();
-      });
+      var config = stateConfig[parsed.state] || stateConfig.unknown_error;
+      var titleNode = document.getElementById("title");
+      var messageNode = document.getElementById("message");
+      var primaryNode = document.getElementById("primary-action");
+      var secondaryNode = document.getElementById("secondary-action");
 
-      retryLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        openApp();
-      });
+      titleNode.textContent = config.title;
+      messageNode.textContent = config.message;
 
-      window.setTimeout(function () {
-        if (autoAttempted) return;
-        autoAttempted = true;
-        openApp();
-      }, 300);
+      primaryNode.textContent = config.primaryLabel;
+      primaryNode.className = config.primaryType === "sign_in" ? "btn-secondary" : "btn-primary";
+      bindAction(primaryNode, config.primaryType);
+
+      if (config.secondaryLabel && config.secondaryType) {
+        secondaryNode.hidden = false;
+        secondaryNode.textContent = config.secondaryLabel;
+        bindAction(secondaryNode, config.secondaryType);
+      } else {
+        secondaryNode.hidden = true;
+      }
+
+      if (config.autoOpen) {
+        window.setTimeout(function () {
+          tryOpenApp();
+        }, AUTO_OPEN_DELAY_MS);
+      }
 
       if (!isProductionHost) {
         var debugBox = document.getElementById("debug-box");
-        var debugUrl = document.getElementById("debug-url");
+        var debugOutput = document.getElementById("debug-output");
         debugBox.hidden = false;
-        debugUrl.textContent = window.location.href;
+        debugOutput.textContent = JSON.stringify(
+          {
+            currentUrl: window.location.href,
+            detectedState: parsed.state,
+            parsedParams: parsed.debugParams
+          },
+          null,
+          2
+        );
       }
 
       document.getElementById("year").textContent = new Date().getFullYear();

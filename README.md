@@ -12,8 +12,21 @@ Public URL:
 
 Purpose:
 - Handles email auth redirects from Supabase.
-- Attempts to open the app deep link (`calmtails://auth/confirm`) automatically.
+- Detects callback status from URL query/hash parameters.
+- Attempts to open the app deep link (`calmtails://auth/confirm`) automatically only for success states.
 - Provides manual retry and install fallback links when the app is not installed.
+
+Supported states:
+- `success_confirmed`: token/session detected, normal confirmation flow.
+- `success_recovery`: token/session detected with recovery flow.
+- `expired`: expired token/link indicators detected.
+- `invalid`: invalid or already-used link indicators detected.
+- `unknown_error`: catch-all fallback when status cannot be determined.
+
+Expected behavior:
+- Success states show app-open CTA and attempt one auto-open after a short delay.
+- Expired/invalid states stay on web fallback and show a sign-in CTA.
+- In non-production hosts, a debug panel displays detected state and masked parsed params.
 
 Calm Tails (“the App”) is developed and maintained by Elder Baltazar (“we”, “us”, or “our”). This Privacy Policy explains how the App handles information when you use it on your device.
 
