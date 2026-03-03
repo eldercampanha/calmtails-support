@@ -6,6 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Official support and legal pages for Calm Tails, including Terms & Conditions and Privacy Policy." />
   <link rel="stylesheet" href="/calmtails-support/assets/legal.css" />
+  <script>
+    (function () {
+      var path = window.location.pathname || "";
+      var isRootSupportPath = path === "/calmtails-support/" || path === "/calmtails-support";
+      if (!isRootSupportPath) return;
+
+      var search = window.location.search || "";
+      var hash = window.location.hash || "";
+      var payload = (search + "&" + hash).toLowerCase();
+      var hasAuthPayload =
+        payload.indexOf("access_token") !== -1 ||
+        payload.indexOf("refresh_token") !== -1 ||
+        payload.indexOf("token_hash") !== -1 ||
+        payload.indexOf("error=") !== -1 ||
+        payload.indexOf("error_code=") !== -1 ||
+        payload.indexOf("type=") !== -1 ||
+        payload.indexOf("code=") !== -1;
+
+      if (!hasAuthPayload) return;
+
+      var target = "/calmtails-support/auth/confirm/" + search + hash;
+      window.location.replace(target);
+    })();
+  </script>
 </head>
 <body>
   <main class="wrap">
