@@ -15,13 +15,13 @@
         <p id="message" class="muted">Please wait while we verify your sign-in link.</p>
       </header>
 
-      <section class="actions" aria-label="Status Actions">
-        <a id="primary-action" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails app</a>
-        <a id="secondary-action" class="text-link" href="calmtails://auth/confirm" hidden>Open CalmTails app again</a>
+      <section class="actions" aria-label="Open App">
+        <a id="open-app-btn" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails App</a>
       </section>
 
       <section class="note-box" aria-label="Install Notes">
-        <p class="muted">If the app is not installed, install it and come back to this email.</p>
+        <p class="muted">If the app does not open, return to sign in and request a new email from the app.</p>
+        <p><a href="https://eldercampanha.github.io/calmtails-support/">Return to sign in</a></p>
         <div class="store-links">
           <a href="https://TODO-APP-STORE-URL" rel="noopener noreferrer">App Store (TODO)</a>
           <a href="https://TODO-GOOGLE-PLAY-URL" rel="noopener noreferrer">Google Play (TODO)</a>
@@ -46,100 +46,53 @@
   <script>
     (function () {
       var APP_SCHEME_BASE = "calmtails://auth/confirm";
-      var AUTO_OPEN_DELAY_MS = 400;
+      var AUTO_OPEN_DELAY_MS = 350;
       var isProductionHost = window.location.hostname === "eldercampanha.github.io";
-
       var deepLink = APP_SCHEME_BASE + (window.location.search || "") + (window.location.hash || "");
       var parsed = window.CalmTailsAuthParser.parseAuthCallbackState(window.location);
+      var autoOpenAttempted = false;
 
       var stateConfig = {
         success_confirmed: {
           title: "Email confirmed",
-          message: "Your account is ready.",
-          primaryLabel: "Open CalmTails app",
-          primaryType: "open_app",
-          secondaryLabel: "Open CalmTails app again",
-          secondaryType: "open_app",
-          autoOpen: true
+          message: "Your account is ready. Open the CalmTails app to continue."
         },
         success_recovery: {
           title: "Continue password reset",
-          message: "Open the app to finish resetting your password.",
-          primaryLabel: "Open CalmTails app",
-          primaryType: "open_app",
-          autoOpen: true
+          message: "Open the CalmTails app to finish resetting your password."
         },
         expired: {
           title: "This link expired",
-          message: "Request a new email from the CalmTails app and sign in again.",
-          primaryLabel: "Open CalmTails app",
-          primaryType: "open_app",
-          autoOpen: false
+          message: "Request a new email from the CalmTails app and sign in again."
         },
         invalid: {
           title: "Invalid link",
-          message: "This link is not valid or was already used. Open the app and sign in again.",
-          primaryLabel: "Open CalmTails app",
-          primaryType: "open_app",
-          autoOpen: false
+          message: "This link is not valid or was already used. Open the CalmTails app and sign in again."
         },
         unknown_error: {
           title: "Something went wrong",
-          message: "Please try again from the app.",
-          primaryLabel: "Open CalmTails app",
-          primaryType: "open_app",
-          secondaryLabel: "Open CalmTails app again",
-          secondaryType: "open_app",
-          autoOpen: false
+          message: "Please open the CalmTails app and try signing in again."
         }
       };
-
-      function resolveHref(type) {
-        return deepLink;
-      }
-
-      function tryOpenApp() {
-        window.location.href = deepLink;
-      }
-
-      function bindAction(anchor, type) {
-        var href = resolveHref(type);
-        anchor.setAttribute("href", href);
-
-        if (type === "open_app") {
-          anchor.addEventListener("click", function (event) {
-            event.preventDefault();
-            tryOpenApp();
-          });
-        }
-      }
 
       var config = stateConfig[parsed.state] || stateConfig.unknown_error;
       var titleNode = document.getElementById("title");
       var messageNode = document.getElementById("message");
-      var primaryNode = document.getElementById("primary-action");
-      var secondaryNode = document.getElementById("secondary-action");
+      var openAppButton = document.getElementById("open-app-btn");
 
       titleNode.textContent = config.title;
       messageNode.textContent = config.message;
+      openAppButton.setAttribute("href", deepLink);
+      openAppButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.location.href = deepLink;
+      });
 
-      primaryNode.textContent = config.primaryLabel;
-      primaryNode.className = "btn-primary";
-      bindAction(primaryNode, config.primaryType);
-
-      if (config.secondaryLabel && config.secondaryType) {
-        secondaryNode.hidden = false;
-        secondaryNode.textContent = config.secondaryLabel;
-        bindAction(secondaryNode, config.secondaryType);
-      } else {
-        secondaryNode.hidden = true;
-      }
-
-      if (config.autoOpen) {
-        window.setTimeout(function () {
-          tryOpenApp();
-        }, AUTO_OPEN_DELAY_MS);
-      }
+      window.setTimeout(function () {
+        if (autoOpenAttempted) return;
+        autoOpenAttempted = true;
+        window.location.href = deepLink;
+      }, AUTO_OPEN_DELAY_MS);
 
       if (!isProductionHost) {
         var debugBox = document.getElementById("debug-box");
@@ -148,6 +101,8 @@
         debugOutput.textContent = JSON.stringify(
           {
             currentUrl: window.location.href,
+            search: window.location.search || "",
+            hash: window.location.hash || "",
             detectedState: parsed.state,
             parsedParams: parsed.debugParams
           },
