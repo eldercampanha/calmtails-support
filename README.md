@@ -25,7 +25,8 @@ Supported states:
 
 Expected behavior:
 - Success states show app-open CTA and attempt one auto-open after a short delay.
-- Expired/invalid states stay on web fallback and show a sign-in CTA.
+- Expired/invalid states stay on the status page and instruct users to open the app and sign in again.
+- No web sign-in fallback is used; callback actions are app-deep-link only.
 - In non-production hosts, a debug panel displays detected state and masked parsed params.
 
 Calm Tails (“the App”) is developed and maintained by Elder Baltazar (“we”, “us”, or “our”). This Privacy Policy explains how the App handles information when you use it on your device.

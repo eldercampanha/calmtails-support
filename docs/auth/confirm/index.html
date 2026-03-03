@@ -16,8 +16,8 @@
       </header>
 
       <section class="actions" aria-label="Status Actions">
-        <a id="primary-action" class="btn-primary" href="/calmtails-support/">Open CalmTails app</a>
-        <a id="secondary-action" class="text-link" href="/calmtails-support/" hidden>Go to sign in</a>
+        <a id="primary-action" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails app</a>
+        <a id="secondary-action" class="text-link" href="calmtails://auth/confirm" hidden>Open CalmTails app again</a>
       </section>
 
       <section class="note-box" aria-label="Install Notes">
@@ -46,7 +46,6 @@
   <script>
     (function () {
       var APP_SCHEME_BASE = "calmtails://auth/confirm";
-      var SIGN_IN_URL = "https://eldercampanha.github.io/calmtails-support/";
       var AUTO_OPEN_DELAY_MS = 400;
       var isProductionHost = window.location.hostname === "eldercampanha.github.io";
 
@@ -59,8 +58,8 @@
           message: "Your account is ready.",
           primaryLabel: "Open CalmTails app",
           primaryType: "open_app",
-          secondaryLabel: "Go to sign in",
-          secondaryType: "sign_in",
+          secondaryLabel: "Open CalmTails app again",
+          secondaryType: "open_app",
           autoOpen: true
         },
         success_recovery: {
@@ -72,16 +71,16 @@
         },
         expired: {
           title: "This link expired",
-          message: "Request a new email and try again.",
-          primaryLabel: "Go to sign in",
-          primaryType: "sign_in",
+          message: "Request a new email from the CalmTails app and sign in again.",
+          primaryLabel: "Open CalmTails app",
+          primaryType: "open_app",
           autoOpen: false
         },
         invalid: {
           title: "Invalid link",
-          message: "This link is not valid or was already used.",
-          primaryLabel: "Go to sign in",
-          primaryType: "sign_in",
+          message: "This link is not valid or was already used. Open the app and sign in again.",
+          primaryLabel: "Open CalmTails app",
+          primaryType: "open_app",
           autoOpen: false
         },
         unknown_error: {
@@ -89,14 +88,14 @@
           message: "Please try again from the app.",
           primaryLabel: "Open CalmTails app",
           primaryType: "open_app",
-          secondaryLabel: "Go to sign in",
-          secondaryType: "sign_in",
+          secondaryLabel: "Open CalmTails app again",
+          secondaryType: "open_app",
           autoOpen: false
         }
       };
 
       function resolveHref(type) {
-        return type === "open_app" ? deepLink : SIGN_IN_URL;
+        return deepLink;
       }
 
       function tryOpenApp() {
@@ -125,7 +124,7 @@
       messageNode.textContent = config.message;
 
       primaryNode.textContent = config.primaryLabel;
-      primaryNode.className = config.primaryType === "sign_in" ? "btn-secondary" : "btn-primary";
+      primaryNode.className = "btn-primary";
       bindAction(primaryNode, config.primaryType);
 
       if (config.secondaryLabel && config.secondaryType) {
