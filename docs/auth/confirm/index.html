@@ -45,10 +45,18 @@
   <script src="/calmtails-support/auth/confirm/state-parser.js"></script>
   <script>
     (function () {
-      var APP_SCHEME_BASE = "calmtails://auth/confirm";
       var AUTO_OPEN_DELAY_MS = 350;
       var isProductionHost = window.location.hostname === "eldercampanha.github.io";
-      var deepLink = APP_SCHEME_BASE + (window.location.search || "") + (window.location.hash || "");
+      var url = new URL(window.location.href);
+      var params = new URLSearchParams(url.search);
+      var hash = url.hash.startsWith("#") ? url.hash.slice(1) : "";
+      if (hash) {
+        var hashParams = new URLSearchParams(hash);
+        hashParams.forEach(function (v, k) {
+          params.set(k, v);
+        });
+      }
+      var deepLink = "calmtails://auth/confirm" + (params.toString() ? "?" + params.toString() : "");
       var parsed = window.CalmTailsAuthParser.parseAuthCallbackState(window.location);
       var autoOpenAttempted = false;
 
@@ -85,13 +93,13 @@
       openAppButton.setAttribute("href", deepLink);
       openAppButton.addEventListener("click", function (event) {
         event.preventDefault();
-        window.location.href = deepLink;
+        window.location.assign(deepLink);
       });
 
       window.setTimeout(function () {
         if (autoOpenAttempted) return;
         autoOpenAttempted = true;
-        window.location.href = deepLink;
+        window.location.assign(deepLink);
       }, AUTO_OPEN_DELAY_MS);
 
       if (!isProductionHost) {
