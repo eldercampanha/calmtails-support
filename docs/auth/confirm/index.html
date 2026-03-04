@@ -16,7 +16,7 @@
       </header>
 
       <section class="actions" aria-label="Open App">
-        <a id="open-app-btn" class="btn-primary" href="calmtails://auth/confirm">calmtails://auth/confirm</a>
+        <a id="open-app-btn" class="btn-primary" href="calmtails://auth/confirm">Open CalmTails App</a>
       </section>
 
       <section class="note-box" aria-label="Install Notes">
@@ -91,7 +91,7 @@
       titleNode.textContent = config.title;
       messageNode.textContent = config.message;
       openAppButton.setAttribute("href", deepLink);
-      openAppButton.textContent = deepLink;
+      openAppButton.textContent = "Open CalmTails App";
       openAppButton.addEventListener("click", function (event) {
         event.preventDefault();
         window.location.assign(deepLink);
