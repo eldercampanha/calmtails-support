@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Calm Tails Support & Legal</title>
+  <title>CalmTails | Dog behavior tracking, coming soon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Official support and legal pages for Calm Tails, including Terms & Conditions and Privacy Policy." />
-  <link rel="stylesheet" href="/calmtails-support/assets/legal.css" />
+  <meta name="description" content="CalmTails is a calm, modern dog behavior tracking app for daily behavior, anxiety signs, medications, reminders, special events, and reports. Coming soon." />
+  <link rel="stylesheet" href="/assets/landing.css" />
   <script>
     (function () {
       var path = window.location.pathname || "";
-      var isRootSupportPath = path === "/calmtails-support/" || path === "/calmtails-support";
+      var isRootSupportPath = path === "/" || path === "";
       if (!isRootSupportPath) return;
 
       var search = window.location.search || "";
@@ -26,40 +26,77 @@
 
       if (!hasAuthPayload) return;
 
-      var target = "/calmtails-support/auth/confirm/" + search + hash;
+      var target = "/auth/confirm/" + search + hash;
       window.location.replace(target);
     })();
   </script>
 </head>
 <body>
-  <main class="wrap">
-    <article class="card" role="article" aria-labelledby="title">
-      <header>
-        <h1 id="title">Calm Tails Support & Legal</h1>
-        <p class="muted">This is the canonical public site for Calm Tails legal and support documentation.</p>
-      </header>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="wordmark" href="/" aria-label="CalmTails home">
+        <img class="wordmark-icon" src="/assets/app_icon.png" alt="" />
+        <span>CalmTails</span>
+      </a>
+      <span class="topbar-status">Pilot Program in Progress</span>
+    </div>
+  </header>
 
-      <section class="legal-links" aria-label="Legal Pages">
-        <a href="/calmtails-support/legal/terms/">
-          <strong>Terms &amp; Conditions</strong>
-          <small>Usage terms, disclaimers, and legal conditions for Calm Tails.</small>
-        </a>
-        <a href="/calmtails-support/legal/privacy/">
-          <strong>Privacy Policy</strong>
-          <small>How Calm Tails handles account data, app content, analytics, and user rights.</small>
-        </a>
-      </section>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Coming soon</p>
+        <h1>Clarity for behavior changes, all in one place.</h1>
+        <p class="subcopy">CalmTails is a dog behavior tracking app for owners and professionals who need a calm, organized record of daily behavior, anxiety signs, medications, reminders, and shareable reports.</p>
 
-      <footer class="footer-nav">
-        <span>© <span id="year"></span> Elder Baltazar</span>
-        <a href="/calmtails-support/legal/">Legal</a>
-        <a href="/calmtails-support/legal/terms/">Terms</a>
-        <a href="/calmtails-support/legal/privacy/">Privacy</a>
-      </footer>
-    </article>
+        <div class="hero-actions" aria-label="Status">
+          <span class="cta-primary">Coming Soon</span>
+          <span class="cta-secondary">Early Pilot in Progress</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="CalmTails product preview">
+        <div class="device-frame">
+          <img class="app-screenshot" src="/assets/app_screenshot.png" alt="CalmTails app showing a monthly behavior calendar, filter controls, and medication section." />
+        </div>
+      </div>
+    </section>
+
+    <section class="support-strip" aria-labelledby="support-title">
+      <h2 id="support-title">A simple way to track behavior, see patterns, and share clearer reports.</h2>
+      <div class="support-items feature-grid">
+        <article class="feature-tile">
+          <span class="feature-icon" aria-hidden="true">○</span>
+          <h3>Track behavior</h3>
+          <p>Keep a daily record of changes, routines, and difficult moments.</p>
+        </article>
+        <article class="feature-tile">
+          <span class="feature-icon" aria-hidden="true">△</span>
+          <h3>See patterns</h3>
+          <p>Notice how anxiety signs, medication, and context evolve over time.</p>
+        </article>
+        <article class="feature-tile">
+          <span class="feature-icon" aria-hidden="true">□</span>
+          <h3>Share reports</h3>
+          <p>Bring clean summaries to trainers, vets, and behavior professionals.</p>
+        </article>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>© <span id="year"></span> Elder Baltazar</span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/legal/privacy/">Privacy</a>
+        <a href="/legal/terms/">Terms</a>
+        <a href="/legal/">Legal</a>
+      </nav>
+    </div>
+  </footer>
+
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

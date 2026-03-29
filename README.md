@@ -23,7 +23,7 @@ Supported states:
 - `unknown_error`: catch-all fallback when status cannot be determined.
 
 Expected behavior:
-- Status page attempts one automatic deep-link open on load and also shows an explicit `Open CalmTails App` button.
+- Status page shows an explicit `Open CalmTails App` button and opens only after user tap.
 - Success states tell users to return to the CalmTails app to continue.
 - Expired/invalid states instruct users to open the app, sign in again, and request a new email link.
 - A web fallback note includes a `Return to sign in` link if the app does not open.
