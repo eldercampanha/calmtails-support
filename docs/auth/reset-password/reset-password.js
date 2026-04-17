@@ -69,6 +69,15 @@ function getErrorMessage(error, fallback) {
   return message || fallback;
 }
 
+function isUsableAppUrl(value) {
+  var appUrl = String(value || "").trim();
+
+  if (!appUrl) return false;
+  if (appUrl === "#" || appUrl.toLowerCase() === "about:blank") return false;
+
+  return /^[a-z][a-z0-9+.-]*:/.test(appUrl) || appUrl.indexOf("/") === 0;
+}
+
 function createLogger() {
   var lines = [];
   var node = document.getElementById("debug-log");
@@ -115,8 +124,13 @@ function buildUi(config) {
   var submitButton = document.getElementById("submit-button");
   var openAppLink = document.getElementById("open-app-link");
   var successActions = document.getElementById("success-actions");
+  var hasAppLink = isUsableAppUrl(config.appOpenUrl);
 
-  openAppLink.href = config.appOpenUrl;
+  if (hasAppLink) {
+    openAppLink.href = config.appOpenUrl;
+  } else {
+    successActions.hidden = true;
+  }
 
   function showForm() {
     message.hidden = true;
@@ -137,8 +151,10 @@ function buildUi(config) {
   }
 
   function showSuccess() {
+    form.reset();
+    clearFormError();
     form.hidden = true;
-    successActions.hidden = false;
+    successActions.hidden = !hasAppLink;
     title.textContent = "Password updated";
     instruction.textContent = "Your password has been reset successfully.";
     message.textContent = "You can now sign in with your new password.";

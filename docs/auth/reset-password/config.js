@@ -5,5 +5,5 @@ window.CALMTAILS_RESET_CONFIG = {
   supabaseJsCdnUrl: "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm",
   appOpenUrl: "calmtails://",
   returnToSignInUrl: "/",
-  minPasswordLength: 10
+  minPasswordLength: 6
 };

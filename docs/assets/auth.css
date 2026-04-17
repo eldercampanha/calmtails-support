@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   min-height: 100%;
@@ -167,9 +171,18 @@ h1 {
 
 .success-actions {
   margin-top: 18px;
+  display: flex;
+  justify-content: center;
 }
 
 .text-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(58, 144, 122, 0.1);
   color: var(--brand-strong);
   font-weight: 600;
   text-decoration: none;
