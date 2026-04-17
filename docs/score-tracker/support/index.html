@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Score Tracker Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Support page for the Score Tracker app." />
+  <link rel="stylesheet" href="/assets/legal.css" />
+</head>
+<body>
+  <main class="wrap">
+    <article class="card" role="article" aria-labelledby="title">
+      <header>
+        <h1 id="title">Score Tracker Support</h1>
+        <p class="muted">Help for setting up players and tracking scores locally on your device.</p>
+      </header>
+
+      <h2>What the app does</h2>
+      <p>Score Tracker lets you add players, start a game, and keep score with data stored locally on your device.</p>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li>If a player does not appear, make sure the name was added before starting the game.</li>
+        <li>If your data looks missing after reinstalling the app, local-only data may have been removed with the app.</li>
+        <li>If the app becomes unresponsive, close and reopen it, then restart your device if needed.</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>For support questions, contact <a href="mailto:elderbaltazar@gmail.com">elderbaltazar@gmail.com</a>.</p>
+
+      <footer class="footer-nav">
+        <span>© <span id="year"></span> Elder Baltazar</span>
+        <a href="/score-tracker/">Home</a>
+        <a href="/score-tracker/legal/privacy/">Privacy</a>
+        <a href="/score-tracker/legal/terms/">Terms</a>
+      </footer>
+    </article>
+  </main>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

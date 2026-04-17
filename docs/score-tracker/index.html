@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Score Tracker Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Support and legal information for the Score Tracker app." />
+  <link rel="stylesheet" href="/assets/legal.css" />
+</head>
+<body>
+  <main class="wrap">
+    <article class="card" role="article" aria-labelledby="title">
+      <header>
+        <h1 id="title">Score Tracker</h1>
+        <p class="muted">Simple score tracking with local-only storage.</p>
+      </header>
+
+      <p>Score Tracker is a lightweight app for setting up players and keeping score during games. It stores game data locally on your device and does not require an account.</p>
+
+      <section class="legal-links" aria-label="Score Tracker Links">
+        <a href="/score-tracker/support/">
+          <strong>Support</strong>
+          <small>How to get help and basic troubleshooting information.</small>
+        </a>
+        <a href="/score-tracker/legal/privacy/">
+          <strong>Privacy Policy</strong>
+          <small>How Score Tracker handles local-only data and privacy.</small>
+        </a>
+        <a href="/score-tracker/legal/terms/">
+          <strong>Terms &amp; Conditions</strong>
+          <small>Basic usage terms for the app.</small>
+        </a>
+      </section>
+
+      <footer class="footer-nav">
+        <span>© <span id="year"></span> Elder Baltazar</span>
+        <a href="/score-tracker/support/">Support</a>
+        <a href="/score-tracker/legal/privacy/">Privacy</a>
+        <a href="/score-tracker/legal/terms/">Terms</a>
+      </footer>
+    </article>
+  </main>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -45,18 +45,25 @@
   <script src="/auth/confirm/state-parser.js"></script>
   <script>
     (function () {
+      var parsed = window.CalmTailsAuthParser.parseAuthCallbackState(window.location);
       var isProductionHost = window.location.hostname === "eldercampanha.github.io";
       var url = new URL(window.location.href);
       var params = new URLSearchParams(url.search);
       var hash = url.hash.startsWith("#") ? url.hash.slice(1) : "";
+
+      if (parsed.params && String(parsed.params.type || "").toLowerCase() === "recovery") {
+        window.location.replace("/auth/reset-password/" + (url.search || "") + (url.hash || ""));
+        return;
+      }
+
       if (hash) {
         var hashParams = new URLSearchParams(hash);
         hashParams.forEach(function (v, k) {
           params.set(k, v);
         });
       }
+
       var deepLink = "calmtails://auth/confirm" + (params.toString() ? "?" + params.toString() : "");
-      var parsed = window.CalmTailsAuthParser.parseAuthCallbackState(window.location);
 
       var stateConfig = {
         success_confirmed: {
