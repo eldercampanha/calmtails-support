@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CalmTails | Reset password</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Reset your CalmTails password." />
+  <link rel="stylesheet" href="../../../assets/auth.css" />
+</head>
+<body>
+  <main class="page">
+    <article class="card" aria-live="polite">
+      <a class="brand" href="../../../" aria-label="CalmTails home">
+        <img src="../../../assets/app_icon.png" alt="" />
+        <span>CalmTails</span>
+      </a>
+
+      <h1 id="title">Reset your password</h1>
+      <p id="instruction" class="instruction">Checking your reset link...</p>
+      <p id="message" class="message" hidden></p>
+      <pre id="debug-log" class="debug-log" hidden></pre>
+
+      <form id="reset-form" class="form" hidden novalidate>
+        <label class="field" for="password">
+          <span>New password</span>
+          <input id="password" name="password" type="password" autocomplete="new-password" required />
+        </label>
+
+        <label class="field" for="confirm-password">
+          <span>Confirm password</span>
+          <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" required />
+        </label>
+
+        <p id="form-error" class="message message-error" hidden></p>
+
+        <button id="submit-button" class="button" type="submit">Update password</button>
+      </form>
+
+      <div id="success-actions" class="success-actions" hidden>
+        <a id="open-app-link" class="text-link" href="calmtails://">Open the app</a>
+      </div>
+    </article>
+  </main>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2.103.3/dist/umd/supabase.js"></script>
+  <script src="../../../auth/reset-password/config.js"></script>
+  <script type="module" src="../../../auth/reset-password/reset-password.js"></script>
+</body>
+</html>
