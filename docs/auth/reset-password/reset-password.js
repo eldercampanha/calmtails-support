@@ -1,10 +1,10 @@
 function getConfig() {
   var config = window.CALMTAILS_RESET_CONFIG || {};
+  var publicKey = String(config.supabaseAnonKey || config.supabasePublishableKey || "").trim();
 
   return {
     supabaseUrl: String(config.supabaseUrl || "").trim(),
-    supabasePublicKey: String(config.supabaseAnonKey || config.supabasePublishableKey || "").trim(),
-    supabaseJsCdnUrl: String(config.supabaseJsCdnUrl || "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm").trim(),
+    supabasePublicKey: publicKey,
     appOpenUrl: String(config.appOpenUrl || "calmtails://").trim(),
     minPasswordLength: Number(config.minPasswordLength || 10)
   };
@@ -195,9 +195,11 @@ function buildUi(config) {
 }
 
 async function createSupabaseClient(config) {
-  var module = await import(config.supabaseJsCdnUrl);
+  if (!window.supabase || typeof window.supabase.createClient !== "function") {
+    throw new Error("Supabase browser client failed to load.");
+  }
 
-  return module.createClient(config.supabaseUrl, config.supabasePublicKey, {
+  return window.supabase.createClient(config.supabaseUrl, config.supabasePublicKey, {
     auth: {
       autoRefreshToken: false,
       detectSessionInUrl: true,
@@ -296,6 +298,12 @@ async function initialize() {
   if (!config.supabaseUrl || !config.supabasePublicKey) {
     logger.error("missing public config");
     ui.showError("This reset page is not configured correctly.");
+    return;
+  }
+
+  if (config.supabasePublicKey === "REPLACE_WITH_PRODUCTION_PUBLIC_ANON_KEY") {
+    logger.error("production public key placeholder still configured");
+    ui.showError("This reset page is missing the production Supabase public key.");
     return;
   }
 
