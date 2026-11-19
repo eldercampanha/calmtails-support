@@ -7,8 +7,8 @@ I’d like to invite you to try CalmTails with 90 days of complimentary Premium 
 Please use your phone for these steps:
 
 1. INSTALL THE APP, if you don’t have it yet:
-[INSTALLATION LINK FOR THIS PERSON’S IPHONE OR ANDROID]
-Follow the TestFlight or Google Play testing instructions provided with this link.
+https://www.calmtails.ca/download/
+Choose your phone and follow the current installation instructions. Android still requires separate Google Play testing access.
 
 2. OPEN YOUR PERSONAL PREMIUM BETA INVITATION:
 [PERSONAL OWNER INVITATION LINK FROM THE PORTAL]
